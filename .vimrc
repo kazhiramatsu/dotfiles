@@ -37,6 +37,7 @@ nnoremap <silent> <Space>b :Unite buffer<CR>
 "nnoremap <silent> <Space>bk :Unite bookmark<CR>
 "nnoremap <silent> <Space>f :UniteWithInput file<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
+nnoremap <silent> <Space>v :VimShell<CR>
 
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
