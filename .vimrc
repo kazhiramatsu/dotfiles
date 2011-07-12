@@ -1,6 +1,6 @@
 set nocompatible
 set number
-"set expandtab
+set expandtab
 set shiftround
 set autoindent
 set backspace=indent,eol,start
@@ -43,9 +43,12 @@ nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
 
 inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
+inoremap <expr> . smartchr#one_of('->')
 
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
+
+nnoremap <silent> <Space>g :Unite grep:%:<CR>
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()

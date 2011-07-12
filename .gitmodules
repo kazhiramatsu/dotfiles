@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/caw.vim"]
 	path = .vim/bundle/caw.vim
 	url = git://github.com/tyru/caw.vim.git
+[submodule ".vim/bundle/unite-grep"]
+	path = .vim/bundle/unite-grep
+	url = git://github.com/Sixeight/unite-grep.git
