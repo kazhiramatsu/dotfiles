@@ -22,3 +22,6 @@
 [submodule ".vim/bundle/unite-grep"]
 	path = .vim/bundle/unite-grep
 	url = git://github.com/Sixeight/unite-grep.git
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround.git

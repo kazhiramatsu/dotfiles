@@ -45,6 +45,26 @@ nnoremap <silent> <C-n> :bnext<CR>
 inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
 inoremap <expr> . smartchr#one_of('->')
 
+let g:surround_no_mappings = 1
+autocmd FileType * call s:define_surround_keymappings()
+
+function! s:define_surround_keymappings()
+    if !&modifiable
+        return
+    endif
+
+    nmap <buffer> ds <Plug>Dsurround
+    nmap <buffer> cs <Plug>Csurround
+    nmap <buffer> ys <Plug>Ysurround
+    nmap <buffer> yS <Plug>YSurround
+    nmap <buffer> yss <Plug>Yssurround
+    nmap <buffer> ySs <Plug>YSsurround
+    nmap <buffer> ySS <Plug>YSsurround
+endfunction
+
+nmap gcc <Plug>(caw:i:toggle)
+xmap gcc <Plug>(caw:i:toggle)
+
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
 
