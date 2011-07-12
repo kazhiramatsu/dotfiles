@@ -4,15 +4,18 @@
 [submodule ".vim/bundle/neocomplcache"]
 	path = .vim/bundle/neocomplcache
 	url = git://github.com/Shougo/neocomplcache.git
-[submodule ".vim/bundle/unite-grep"]
-	path = .vim/bundle/unite-grep
-	url = git://github.com/Shougo/unite-grep.git
 [submodule ".vim/bundle/vimproc"]
 	path = .vim/bundle/vimproc
 	url = git://github.com/Shougo/vimproc.git
 [submodule ".vim/bundle/vimshell"]
 	path = .vim/bundle/vimshell
 	url = git://github.com/Shougo/vimshell.git
-[submodule ".vim/bundle/quickrun"]
-	path = .vim/bundle/quickrun
-	url = git://github.com/ujihisa/quickrun.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
+[submodule ".vim/bundle/vim-smartchr"]
+	path = .vim/bundle/vim-smartchr
+	url = git://github.com/kana/vim-smartchr.git
+[submodule ".vim/bundle/caw.vim"]
+	path = .vim/bundle/caw.vim
+	url = git://github.com/tyru/caw.vim.git

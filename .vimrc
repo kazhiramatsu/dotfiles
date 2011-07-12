@@ -27,7 +27,7 @@ set updatetime=500
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
-
+ 
 set makeprg=/usr/local/php/bin/php\ -l\ %
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
@@ -39,13 +39,16 @@ nnoremap <silent> <Space>b :Unite buffer<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 nnoremap <silent> <Space>v :VimShell<CR>
 
+nnoremap <silent> <C-p> :bprevious<CR>
+nnoremap <silent> <C-n> :bnext<CR>
+
+inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
+
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
 
-silent! nmap <unique> <Space>r<Plug>(quickrun)
-
 call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
+call pathogen#helptags()
 
 filetype plugin indent on
 syntax on
