@@ -1,6 +1,6 @@
 set nocompatible
 set number
-set expandtab
+"set expandtab
 set shiftround
 set autoindent
 set backspace=indent,eol,start
@@ -42,8 +42,8 @@ nnoremap <silent> <Space>v :VimShell<CR>
 nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
 
-inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
-inoremap <expr> . smartchr#one_of('->')
+"autocmd FileType javascript inoremap <buffer> <expr> -> smartchr#one_of('function', '->')
+autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
 
 let g:surround_no_mappings = 1
 autocmd FileType * call s:define_surround_keymappings()
@@ -65,8 +65,18 @@ endfunction
 nmap gcc <Plug>(caw:i:toggle)
 xmap gcc <Plug>(caw:i:toggle)
 
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" snippets expand key
+imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
+smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
+
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
+
+let g:vimshell_user_prompt = 'getcwd()'
+let g:vimshell_disable_escape_highlight = 1
+let g:vimshell_split_command = 'vi' 
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
 
