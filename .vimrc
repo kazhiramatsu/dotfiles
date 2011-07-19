@@ -32,12 +32,16 @@ set makeprg=/usr/local/php/bin/php\ -l\ %
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
 let g:unite_enable_start_insert = 1
-nnoremap <silent> <Space>f :Unite file_mru<CR>
-nnoremap <silent> <Space>b :Unite buffer<CR>
+nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
+nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
+"nnoremap <silent> <Space>f :Unite file_mru<CR>
+"nnoremap <silent> <Space>b :Unite buffer<CR>
 "nnoremap <silent> <Space>bk :Unite bookmark<CR>
 "nnoremap <silent> <Space>f :UniteWithInput file<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
-nnoremap <silent> <Space>v :VimShell<CR>
+"nnoremap <silent> <Space>v :VimShell<CR>
+
+nmap <silent> <Space>v <Plug>(vimshell_create)
 
 nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
@@ -76,7 +80,7 @@ let g:unite_source_grep_default_opts = '-iRHn'
 
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
-"let g:vimshell_split_command = 'vi' 
+"let g:vimshell_split_command = 'split' 
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
 
