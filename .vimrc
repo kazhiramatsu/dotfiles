@@ -74,9 +74,9 @@ smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 let g:neocomplcache_enable_at_startup = 1
 let g:unite_source_grep_default_opts = '-iRHn'
 
-let g:vimshell_user_prompt = 'getcwd()'
+"let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
-let g:vimshell_split_command = 'vi' 
+"let g:vimshell_split_command = 'vi' 
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
 
