@@ -80,7 +80,7 @@ let g:unite_source_grep_default_opts = '-iRHn'
 
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
-"let g:vimshell_split_command = 'split' 
+let g:vimshell_split_command = 'edit' 
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
 
