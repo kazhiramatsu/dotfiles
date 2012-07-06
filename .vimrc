@@ -31,6 +31,7 @@ set visualbell t_vb=
 set makeprg=/usr/local/php/bin/php\ -l\ %
 set errorformat=%m\ in\ %f\ on\ line\ %l
 
+
 let g:unite_enable_start_insert = 1
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
 "nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
@@ -41,13 +42,13 @@ nnoremap <silent> <Space>f :Unite file_mru<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 "nnoremap <silent> <Space>v :VimShell<CR>
 
-nmap <silent> <Space>v <Plug>(vimshell_create)
 
 nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
 
 "autocmd FileType javascript inoremap <buffer> <expr> -> smartchr#one_of('function', '->')
 autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
+autocmd FileType lua  inoremap <expr> = smartchr#one_of(' = ', ' == ')
 
 let g:surround_no_mappings = 1
 autocmd FileType * call s:define_surround_keymappings()
@@ -80,11 +81,19 @@ let g:unite_source_grep_default_opts = '-iRHn'
 
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
-let g:vimshell_split_command = 'edit' 
+let g:vimshell_split_command = 'edit'
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
+nnoremap <silent> <Space>h :VimShell .<CR>
+nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
-nnoremap <silent> <Space>v  :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+filetype plugin indent on
+syntax on
+colorscheme wombat256mod
+
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
@@ -98,19 +107,12 @@ function! my_action.func(candidates)
   exec 'split '. a:candidates[0].action__path
 endfunction
 
-
 let my_action = { 'is_selectable' : 1 }                     
 function! my_action.func(candidates)
   wincmd p
   exec 'vsplit '. a:candidates[0].action__path
 endfunction
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
 
-filetype plugin indent on
-syntax on
-colorscheme wombat256mod
