@@ -12,12 +12,12 @@ set incsearch
 set laststatus=2
 set nobackup
 set ruler
-set shiftwidth=2
+set shiftwidth=4
 set showcmd
 set showmatch
 set smartcase
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set tabstop=2
+set tabstop=4
 set wrapscan
 filetype off 
 set updatetime=500
@@ -27,16 +27,18 @@ set updatetime=500
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
- 
-set makeprg=/usr/local/php/bin/php\ -l\ %
-set errorformat=%m\ in\ %f\ on\ line\ %l
+
+
+let g:syntastic_mode_map = { 'mode': 'active',
+      \ 'active_filetypes': ['js', 'perl'],
+      \ 'passive_filetypes': ['ruby'] }
 
 
 let g:unite_enable_start_insert = 1
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
 "nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
 nnoremap <silent> <Space>f :Unite file_mru<CR>
-"nnoremap <silent> <Space>b :Unite buffer<CR>
+nnoremap <silent> <Space>b :Unite buffer<CR>
 "nnoremap <silent> <Space>bk :Unite bookmark<CR>
 "nnoremap <silent> <Space>f :UniteWithInput file<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
@@ -46,9 +48,30 @@ nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
 
-"autocmd FileType javascript inoremap <buffer> <expr> -> smartchr#one_of('function', '->')
+autocmd FileType javascript inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
+autocmd FileType javascript inoremap <expr> fun smartchr#one_of('function')
 autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
 autocmd FileType lua  inoremap <expr> = smartchr#one_of(' = ', ' == ')
+autocmd FileType ruby call s:define_ruby_settings() 
+autocmd FileType c call s:define_c_settings()
+
+function! s:define_ruby_settings()
+    if !&modifiable
+        return
+    endif
+    autocmd FileType ruby inoremap <expr> = smartchr#one_of(' = ', ' == ', ': ')
+    set tabstop=2
+    set shiftwidth=2
+endfunction
+
+function! s:define_c_settings()
+    if !&modifiable
+        return
+    endif
+
+    set tabstop=4
+    set shiftwidth=4
+endfunction
 
 let g:surround_no_mappings = 1
 autocmd FileType * call s:define_surround_keymappings()
@@ -73,29 +96,35 @@ xmap gcc <Plug>(caw:i:toggle)
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " snippets expand key
-imap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
-smap <silent> <C-e> <Plug>(neocomplcache_snippets_expand)
 
 let g:neocomplcache_enable_at_startup = 1
+imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+
+"noremap es :<C-u>NeoComplCacheEditSnippets<CR>
+
 let g:unite_source_grep_default_opts = '-iRHn'
+" let g:neocomplcache_enable_at_startup = 1
+" let g:neocomplcache_enable_smart_case = 1
+" let g:neocomplcache_enable_camel_case_completion = 1
+" let g:neocomplcache_enable_underbar_completion = 1
+" let g:neocomplcache_min_syntax_length = 5
+
 
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
 let g:vimshell_split_command = 'edit'
 
 nnoremap <silent> <Space>g :Unite grep:%:<CR>
-nnoremap <silent> <Space>h :VimShell .<CR>
+nnoremap <silent> <Space>h :VimShellPop .<CR>
 nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-filetype plugin indent on
-syntax on
-colorscheme wombat256mod
 
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
+  let g:vimfiler_as_default_explorer = 1
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
   nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
@@ -116,3 +145,7 @@ endfunction
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
 
+
+filetype plugin indent on
+syntax on
+colorscheme wombat256mod

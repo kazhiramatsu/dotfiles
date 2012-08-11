@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/Users/hiramatsu/dotfiles/.vim/bundle'
+let g:netrw_dirhist_2='/Users/hiramatsu/dotfiles/.vim/bundle/objc_matchbracket'
+let g:netrw_dirhist_3='/Users/hiramatsu/dotfiles/.vim/bundle/objc_matchbracket/ftplugin'
+let g:netrw_dirhist_4='/Users/hiramatsu/test/vendor/Hmac/Hmac'
+let g:netrw_dirhist_5='/Users/hiramatsu/sense-sqale/.git'
+let g:netrw_dirhist_6='/Users/hiramatsu/jsOAuth/src'
+let g:netrw_dirhist_7='/Users/hiramatsu/jsOAuth/src/OAuth'
+let g:netrw_dirhist_8='/Users/hiramatsu/dotfiles/.git'
