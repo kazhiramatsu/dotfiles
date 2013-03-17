@@ -12,12 +12,12 @@ set incsearch
 set laststatus=2
 set nobackup
 set ruler
-set shiftwidth=4
+set shiftwidth=2
 set showcmd
 set showmatch
 set smartcase
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set tabstop=4
+set tabstop=2
 set wrapscan
 filetype off 
 set updatetime=500
@@ -28,11 +28,7 @@ set ambw=double
 set t_Co=256
 set visualbell t_vb=
 
-
-let g:syntastic_mode_map = { 'mode': 'active',
-      \ 'active_filetypes': ['js', 'perl'],
-      \ 'passive_filetypes': ['ruby'] }
-
+let g:syntastic_enable_signs=0
 
 let g:unite_enable_start_insert = 1
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
@@ -44,24 +40,51 @@ nnoremap <silent> <Space>b :Unite buffer<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 "nnoremap <silent> <Space>v :VimShell<CR>
 
+nnoremap <silent> <Space>r :QuickRun perl<CR>
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable() ?  "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+let g:neosnippet#enable_snipmate_compatibility = 1
 
 nnoremap <silent> <C-p> :bprevious<CR>
 nnoremap <silent> <C-n> :bnext<CR>
 
-autocmd FileType javascript inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
-autocmd FileType javascript inoremap <expr> fun smartchr#one_of('function')
+autocmd FileType javascript call s:define_javascript_settings() 
+autocmd FileType perl call s:define_perl_settings() 
 autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
-autocmd FileType lua  inoremap <expr> = smartchr#one_of(' = ', ' == ')
+autocmd FileType html inoremap <expr> = smartchr#one_of('=')
 autocmd FileType ruby call s:define_ruby_settings() 
 autocmd FileType c call s:define_c_settings()
+
+function! s:define_javascript_settings()
+    if !&modifiable
+        return
+    endif
+"    inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
+    set tabstop=2
+    set shiftwidth=2
+endfunction
 
 function! s:define_ruby_settings()
     if !&modifiable
         return
     endif
-    autocmd FileType ruby inoremap <expr> = smartchr#one_of(' = ', ' == ', ': ')
+"    inoremap <expr> = smartchr#one_of(' = ', ' == ', ': ')
     set tabstop=2
     set shiftwidth=2
+    set tags+=tags;
+    NeoComplCacheCachingTags
 endfunction
 
 function! s:define_c_settings()
@@ -71,6 +94,16 @@ function! s:define_c_settings()
 
     set tabstop=4
     set shiftwidth=4
+endfunction
+
+function! s:define_perl_settings()
+    if !&modifiable
+        return
+    endif
+
+    set tabstop=4
+    set shiftwidth=4
+"    inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
 endfunction
 
 let g:surround_no_mappings = 1
@@ -98,7 +131,6 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " snippets expand key
 
 let g:neocomplcache_enable_at_startup = 1
-imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 "noremap es :<C-u>NeoComplCacheEditSnippets<CR>
 
@@ -114,7 +146,9 @@ let g:unite_source_grep_default_opts = '-iRHn'
 let g:vimshell_disable_escape_highlight = 1
 let g:vimshell_split_command = 'edit'
 
-nnoremap <silent> <Space>g :Unite grep:%:<CR>
+let g:vimfiler_time_format = ''
+
+"nnoremap <silent> <Space>g :Unite grep:%:<CR>
 nnoremap <silent> <Space>h :VimShellPop .<CR>
 nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
@@ -142,10 +176,11 @@ function! my_action.func(candidates)
   exec 'vsplit '. a:candidates[0].action__path
 endfunction
 
+
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
 
 
 filetype plugin indent on
-syntax on
+syntax on 
 colorscheme wombat256mod
