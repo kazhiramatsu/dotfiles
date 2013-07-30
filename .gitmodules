@@ -49,3 +49,6 @@
 [submodule ".vim/bundle/vim-quickrun"]
 	path = .vim/bundle/vim-quickrun
 	url = https://github.com/thinca/vim-quickrun.git
+[submodule ".vim/bundle/YankRing"]
+	path = .vim/bundle/YankRing
+	url = https://github.com/vim-scripts/YankRing.vim.git

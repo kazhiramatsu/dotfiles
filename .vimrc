@@ -208,6 +208,8 @@ let g:vimfiler_time_format = ''
 nnoremap <silent> <Space>h :VimShellPop .<CR>
 nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
+nmap <silent> <Space>p :YRShow<CR> 
+
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
@@ -235,7 +237,6 @@ endfunction
 
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
-
 
 filetype plugin indent on
 syntax on 
