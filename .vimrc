@@ -84,8 +84,6 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-let g:syntastic_enable_signs=0
-
 let g:unite_enable_start_insert = 1
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
 "nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
