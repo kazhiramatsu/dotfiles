@@ -188,18 +188,17 @@ let g:neocomplcache_enable_at_startup = 1
 
 "noremap es :<C-u>NeoComplCacheEditSnippets<CR>
 
-"let g:unite_source_grep_default_opts = '-iRHn'
-if executable('ag')
-  " Use ag in unite grep source.
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden'
-  let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-  " Use ack in unite grep source.
-  let g:unite_source_grep_command = 'ack-grep'
-  let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
-  let g:unite_source_grep_recursive_opt = ''
-endif
+" if executable('ag')
+"   " Use ag in unite grep source.
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden'
+"   let g:unite_source_grep_recursive_opt = ''
+" elseif executable('ack-grep')
+"   " Use ack in unite grep source.
+"   let g:unite_source_grep_command = 'ack-grep'
+"   let g:unite_source_grep_default_opts = '--no-heading --no-color -a'
+"   let g:unite_source_grep_recursive_opt = ''
+" endif
 
 " let g:neocomplcache_enable_at_startup = 1
 " let g:neocomplcache_enable_smart_case = 1
@@ -214,11 +213,25 @@ let g:vimshell_split_command = 'edit'
 
 let g:vimfiler_time_format = ''
 
-"nnoremap <silent> <Space>g :Unite grep:%:<CR>
+"nnoremap <silent> <Space>g :Unite grep<CR>
+
 nnoremap <silent> <Space>h :VimShellPop .<CR>
 nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
+nnoremap <silent> <Space>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+
+" カーソル位置の単語をgrep検索
+nnoremap <silent> <Space>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap <silent> <Space>r :<C-u>UniteResume search-buffer<CR>
+
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+
 nmap <silent> <Space>p :YRShow<CR> 
+
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
@@ -244,6 +257,7 @@ function! my_action.func(candidates)
   exec 'vsplit '. a:candidates[0].action__path
 endfunction
 
+"let g:unite_source_grep_default_opts = '-iRHn'
 
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
