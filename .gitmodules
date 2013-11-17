@@ -16,9 +16,6 @@
 [submodule ".vim/bundle/caw.vim"]
 	path = .vim/bundle/caw.vim
 	url = git://github.com/tyru/caw.vim.git
-[submodule ".vim/bundle/unite-grep"]
-	path = .vim/bundle/unite-grep
-	url = git://github.com/Sixeight/unite-grep.git
 [submodule ".vim/bundle/vim-surround"]
 	path = .vim/bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
@@ -52,3 +49,9 @@
 [submodule ".vim/bundle/ack.vim"]
 	path = .vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
+[submodule ".vim/bundle/xslate-vim"]
+	path = .vim/bundle/xslate-vim
+	url = https://github.com/motemen/xslate-vim.git
+[submodule ".vim/bundle/yankround.vim"]
+	path = .vim/bundle/yankround.vim
+	url = https://github.com/LeafCage/yankround.vim.git

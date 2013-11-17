@@ -84,7 +84,7 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-let g:unite_enable_start_insert = 1
+let g:unite_enable_start_insert = 0
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
 "nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
 nnoremap <silent> <Space>f :Unite file_mru<CR>
@@ -116,10 +116,20 @@ nnoremap <silent> <C-n> :bnext<CR>
 
 autocmd FileType javascript call s:define_javascript_settings() 
 autocmd FileType perl call s:define_perl_settings() 
+autocmd FileType xslate call s:define_xslate_settings() 
 autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
 autocmd FileType html inoremap <expr> = smartchr#one_of('=')
+autocmd FileType html inoremap <expr> : smartchr#one_of(': ')
 autocmd FileType ruby call s:define_ruby_settings() 
 autocmd FileType c call s:define_c_settings()
+
+function! s:define_xslate_settings()
+    if !&modifiable
+        return
+    endif
+    set tabstop=2
+    set shiftwidth=2
+endfunction
 
 function! s:define_javascript_settings()
     if !&modifiable
@@ -223,12 +233,6 @@ nnoremap <silent> <Space>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 " カーソル位置の単語をgrep検索
 nnoremap <silent> <Space>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap <silent> <Space>r :<C-u>UniteResume search-buffer<CR>
-
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
 
 nmap <silent> <Space>p :YRShow<CR> 
 
