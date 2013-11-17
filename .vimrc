@@ -11,6 +11,7 @@ set ignorecase
 set incsearch
 set laststatus=2
 set nobackup
+set noswapfile
 set ruler
 set shiftwidth=4
 set showcmd
@@ -84,6 +85,11 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+
 let g:unite_enable_start_insert = 0
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
 "nnoremap <silent> <Space>b :UniteWithBuffer buffer file_mru file<CR>
@@ -118,8 +124,10 @@ autocmd FileType javascript call s:define_javascript_settings()
 autocmd FileType perl call s:define_perl_settings() 
 autocmd FileType xslate call s:define_xslate_settings() 
 autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
+autocmd FileType c inoremap <expr> = smartchr#one_of(' = ', ' == ')
 autocmd FileType html inoremap <expr> = smartchr#one_of('=')
-autocmd FileType html inoremap <expr> : smartchr#one_of(': ')
+autocmd FileType xslate inoremap <expr> : smartchr#one_of(': ', '::')
+autocmd FileType xslate inoremap <expr> - smartchr#one_of(' -> ', '-')
 autocmd FileType ruby call s:define_ruby_settings() 
 autocmd FileType c call s:define_c_settings()
 
@@ -234,8 +242,9 @@ nnoremap <silent> <Space>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> <Space>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap <silent> <Space>r :<C-u>UniteResume search-buffer<CR>
 
-nmap <silent> <Space>p :YRShow<CR> 
+"nmap <silent> <Space>p :YRShow<CR> 
 
+nnoremap <silent> <Space>p :<C-u>CtrlPYankRound<CR>
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()

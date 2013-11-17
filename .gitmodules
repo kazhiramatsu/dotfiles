@@ -55,3 +55,6 @@
 [submodule ".vim/bundle/yankround.vim"]
 	path = .vim/bundle/yankround.vim
 	url = https://github.com/LeafCage/yankround.vim.git
+[submodule ".vim/bundle/vim-autoclose"]
+	path = .vim/bundle/vim-autoclose
+	url = https://github.com/Townk/vim-autoclose.git
