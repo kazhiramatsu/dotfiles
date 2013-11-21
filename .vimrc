@@ -56,7 +56,7 @@ if has('iconv')
     set fileencodings+=utf-8,ucs-2le,ucs-2
     if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
       set fileencodings+=cp932
-      set fileencodings-=euc-jp
+      
       set fileencodings-=euc-jisx0213
       set fileencodings-=eucjp-ms
       let &encoding = s:enc_euc
@@ -85,10 +85,12 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-nmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
+inoremap <C-o> <Esc>
+
+" nmap p <Plug>(yankround-p)
+" nmap P <Plug>(yankround-P)
+" nmap <C-p> <Plug>(yankround-prev)
+" nmap <C-n> <Plug>(yankround-next)
 
 let g:unite_enable_start_insert = 0
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
@@ -102,39 +104,53 @@ nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 
 nnoremap <silent> <Space>r :QuickRun perl<CR>
 
+let g:unite_source_history_yank_enable = 1
+nnoremap <silent> <Space>p :<C-u>Unite history/yank<CR>
+
+"let g:neosnippet#enable_snipmate_compatibility = 1
+
+augroup MyAutoCmd
+  autocmd! 
+augroup END
+
+autocmd! MyAutoCmd FileType javascript call s:define_javascript_settings() 
+autocmd! MyAutoCmd FileType perl call s:define_perl_settings() 
+autocmd! MyAutoCmd FileType html call s:define_html_settings()
+autocmd! MyAutoCmd FileType xslate call s:define_xslate_settings()
+autocmd! MyAutoCmd FileType c call s:define_c_settings()
+
+" <TAB>: completion.
+" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable() ?  "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() ?  "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" imap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-nnoremap <silent> <C-p> :bprevious<CR>
-nnoremap <silent> <C-n> :bnext<CR>
-
-autocmd FileType javascript call s:define_javascript_settings() 
-autocmd FileType perl call s:define_perl_settings() 
-autocmd FileType xslate call s:define_xslate_settings() 
-autocmd FileType perl inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
-autocmd FileType c inoremap <expr> = smartchr#one_of(' = ', ' == ')
-autocmd FileType html inoremap <expr> = smartchr#one_of('=')
-autocmd FileType xslate inoremap <expr> : smartchr#one_of(': ', '::')
-autocmd FileType xslate inoremap <expr> - smartchr#one_of(' -> ', '-')
-autocmd FileType ruby call s:define_ruby_settings() 
-autocmd FileType c call s:define_c_settings()
+function! s:define_html_settings()
+    if !&modifiable
+        return
+    endif
+    inoremap <expr> - smartchr#one_of('-')
+    set tabstop=2
+    set shiftwidth=2
+endfunction
 
 function! s:define_xslate_settings()
     if !&modifiable
         return
     endif
+    inoremap <expr> - smartchr#one_of(' -> ')
     set tabstop=2
     set shiftwidth=2
 endfunction
@@ -156,14 +172,13 @@ function! s:define_ruby_settings()
     set tabstop=2
     set shiftwidth=2
     set tags+=tags;
-    NeoComplCacheCachingTags
 endfunction
 
 function! s:define_c_settings()
     if !&modifiable
         return
     endif
-
+    inoremap <expr> = smartchr#one_of(' = ', ' == ')
     set tabstop=4
     set shiftwidth=4
 endfunction
@@ -172,33 +187,15 @@ function! s:define_perl_settings()
     if !&modifiable
         return
     endif
-
+    inoremap <expr> - smartchr#one_of('->', '-')
+    inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
+    inoremap <expr> <C-j> smartchr#one_of('$')
     set tabstop=4
     set shiftwidth=4
-"    inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
-endfunction
-
-let g:surround_no_mappings = 1
-autocmd FileType * call s:define_surround_keymappings()
-
-function! s:define_surround_keymappings()
-    if !&modifiable
-        return
-    endif
-
-    nmap <buffer> ds <Plug>Dsurround
-    nmap <buffer> cs <Plug>Csurround
-    nmap <buffer> ys <Plug>Ysurround
-    nmap <buffer> yS <Plug>YSurround
-    nmap <buffer> yss <Plug>Yssurround
-    nmap <buffer> ySs <Plug>YSsurround
-    nmap <buffer> ySS <Plug>YSsurround
 endfunction
 
 nmap gcc <Plug>(caw:i:toggle)
 xmap gcc <Plug>(caw:i:toggle)
-
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " snippets expand key
 
@@ -224,7 +221,6 @@ let g:neocomplcache_enable_at_startup = 1
 " let g:neocomplcache_enable_underbar_completion = 1
 " let g:neocomplcache_min_syntax_length = 5
 
-
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
 let g:vimshell_split_command = 'edit'
@@ -242,9 +238,10 @@ nnoremap <silent> <Space>g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> <Space>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap <silent> <Space>r :<C-u>UniteResume search-buffer<CR>
 
+"
 "nmap <silent> <Space>p :YRShow<CR> 
 
-nnoremap <silent> <Space>p :<C-u>CtrlPYankRound<CR>
+"nnoremap <silent> <Space>p :<C-u>CtrlPYankRound<CR>
 
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()

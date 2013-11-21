@@ -16,18 +16,9 @@
 [submodule ".vim/bundle/caw.vim"]
 	path = .vim/bundle/caw.vim
 	url = git://github.com/tyru/caw.vim.git
-[submodule ".vim/bundle/vim-surround"]
-	path = .vim/bundle/vim-surround
-	url = git://github.com/tpope/vim-surround.git
 [submodule ".vim/bundle/vimfiler"]
 	path = .vim/bundle/vimfiler
 	url = https://github.com/Shougo/vimfiler.git
-[submodule ".vim/bundle/vim-endwise"]
-	path = .vim/bundle/vim-endwise
-	url = https://github.com/tpope/vim-endwise.git
-[submodule ".vim/bundle/vim-rails"]
-	path = .vim/bundle/vim-rails
-	url = https://github.com/tpope/vim-rails.git
 [submodule ".vim/bundle/vim-qfreplace"]
 	path = .vim/bundle/vim-qfreplace
 	url = https://github.com/thinca/vim-qfreplace.git
@@ -37,24 +28,12 @@
 [submodule ".vim/bundle/neosnippet"]
 	path = .vim/bundle/neosnippet
 	url = https://github.com/Shougo/neosnippet.git
-[submodule ".vim/bundle/zencoding-vim"]
-	path = .vim/bundle/zencoding-vim
-	url = https://github.com/mattn/zencoding-vim.git
 [submodule ".vim/bundle/vim-quickrun"]
 	path = .vim/bundle/vim-quickrun
 	url = https://github.com/thinca/vim-quickrun.git
-[submodule ".vim/bundle/YankRing"]
-	path = .vim/bundle/YankRing
-	url = https://github.com/vim-scripts/YankRing.vim.git
 [submodule ".vim/bundle/ack.vim"]
 	path = .vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
 [submodule ".vim/bundle/xslate-vim"]
 	path = .vim/bundle/xslate-vim
 	url = https://github.com/motemen/xslate-vim.git
-[submodule ".vim/bundle/yankround.vim"]
-	path = .vim/bundle/yankround.vim
-	url = https://github.com/LeafCage/yankround.vim.git
-[submodule ".vim/bundle/vim-autoclose"]
-	path = .vim/bundle/vim-autoclose
-	url = https://github.com/Townk/vim-autoclose.git
