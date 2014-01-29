@@ -85,7 +85,7 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-inoremap <C-o> <Esc>
+"inoremap <C-o> <Esc>
 
 " nmap p <Plug>(yankround-p)
 " nmap P <Plug>(yankround-P)
@@ -104,20 +104,19 @@ nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
 
 nnoremap <silent> <Space>r :QuickRun perl<CR>
 
-let g:unite_source_history_yank_enable = 1
-nnoremap <silent> <Space>p :<C-u>Unite history/yank<CR>
+"let g:unite_source_history_yank_enable = 1
+"nnoremap <silent> <Space>p :<C-u>Unite history/yank<CR>
 
 "let g:neosnippet#enable_snipmate_compatibility = 1
 
 augroup MyAutoCmd
   autocmd! 
+  autocmd BufRead,BufNewFile *.js call s:define_javascript_settings() 
+  autocmd BufRead,BufNewFile *.{psgi,pl,pm} call s:define_perl_settings() 
+  autocmd BufRead,BufNewFile *.html call s:define_html_settings()
+  autocmd BufRead,BufNewFile *.tx call s:define_xslate_settings()
+  autocmd BufRead,BufNewFile *.{c,y} call s:define_c_settings()
 augroup END
-
-autocmd! MyAutoCmd FileType javascript call s:define_javascript_settings() 
-autocmd! MyAutoCmd FileType perl call s:define_perl_settings() 
-autocmd! MyAutoCmd FileType html call s:define_html_settings()
-autocmd! MyAutoCmd FileType xslate call s:define_xslate_settings()
-autocmd! MyAutoCmd FileType c call s:define_c_settings()
 
 " <TAB>: completion.
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -137,20 +136,32 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
+function! Xslate()
+    autocmd! MyAutoCmd
+    set ft=xslate
+    call s:define_xslate_settings()
+endfunction
+
+function! Html()
+    autocmd! MyAutoCmd
+    set ft=html
+    call s:define_html_settings()
+endfunction
+
 function! s:define_html_settings()
     if !&modifiable
         return
     endif
-    inoremap <expr> - smartchr#one_of('-')
-    set tabstop=2
-    set shiftwidth=2
+    inoremap <buffer><expr> - smartchr#one_of('-')
+    setlocal tabstop=2
+    setlocal shiftwidth=2
 endfunction
 
 function! s:define_xslate_settings()
     if !&modifiable
         return
     endif
-    inoremap <expr> - smartchr#one_of(' -> ')
+    inoremap <buffer><expr> - smartchr#one_of(' -> ')
     set tabstop=2
     set shiftwidth=2
 endfunction
@@ -178,7 +189,7 @@ function! s:define_c_settings()
     if !&modifiable
         return
     endif
-    inoremap <expr> = smartchr#one_of(' = ', ' == ')
+    inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ')
     set tabstop=4
     set shiftwidth=4
 endfunction
@@ -187,9 +198,8 @@ function! s:define_perl_settings()
     if !&modifiable
         return
     endif
-    inoremap <expr> - smartchr#one_of('->', '-')
-    inoremap <expr> = smartchr#one_of(' = ', ' => ', ' == ')
-    inoremap <expr> <C-j> smartchr#one_of('$')
+    inoremap <buffer><expr> - smartchr#one_of('->')
+    inoremap <buffer><expr> = smartchr#one_of(' = ', ' => ', ' == ')
     set tabstop=4
     set shiftwidth=4
 endfunction
