@@ -40,3 +40,12 @@
 [submodule ".vim/bundle/vim-javascript"]
 	path = .vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule ".vim/bundle/neomru.vim"]
+	path = .vim/bundle/neomru.vim
+	url = https://github.com/Shougo/neomru.vim
+[submodule ".vim/bundle/clang_complete"]
+	path = .vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule ".vim/bundle/clang_complete-getopts-ios"]
+	path = .vim/bundle/clang_complete-getopts-ios
+	url = https://github.com/tokorom/clang_complete-getopts-ios.git
