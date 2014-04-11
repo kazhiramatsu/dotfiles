@@ -5,7 +5,7 @@ set shiftround
 set autoindent
 set backspace=indent,eol,start
 set hidden
-set history=50
+set history=500
 set hlsearch
 set ignorecase
 set incsearch
@@ -13,12 +13,12 @@ set laststatus=2
 set nobackup
 set noswapfile
 set ruler
-set shiftwidth=4
+set shiftwidth=2
 set showcmd
 set showmatch
 set smartcase
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
-set tabstop=4
+set tabstop=2
 set wrapscan
 filetype off 
 set updatetime=500
@@ -27,6 +27,8 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
+
+
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
@@ -85,12 +87,14 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
+
 "inoremap <C-o> <Esc>
 
 " nmap p <Plug>(yankround-p)
 " nmap P <Plug>(yankround-P)
 " nmap <C-p> <Plug>(yankround-prev)
 " nmap <C-n> <Plug>(yankround-next)
+
 
 let g:unite_enable_start_insert = 0
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
@@ -109,14 +113,6 @@ nnoremap <silent> <Space>r :QuickRun perl<CR>
 
 "let g:neosnippet#enable_snipmate_compatibility = 1
 
-augroup MyAutoCmd
-  autocmd! 
-  autocmd BufRead,BufNewFile *.js call s:define_javascript_settings() 
-  autocmd BufRead,BufNewFile *.{psgi,pl,pm} call s:define_perl_settings() 
-  autocmd BufRead,BufNewFile *.html call s:define_html_settings()
-  autocmd BufRead,BufNewFile *.tx call s:define_xslate_settings()
-  autocmd BufRead,BufNewFile *.{c,y} call s:define_c_settings()
-augroup END
 
 " <TAB>: completion.
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -136,80 +132,10 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-function! Xslate()
-    autocmd! MyAutoCmd
-    set ft=xslate
-    call s:define_xslate_settings()
-endfunction
-
-function! Html()
-    autocmd! MyAutoCmd
-    set ft=html
-    call s:define_html_settings()
-endfunction
-
-function! s:define_html_settings()
-    if !&modifiable
-        return
-    endif
-    inoremap <buffer><expr> - smartchr#one_of('-')
-    setlocal tabstop=2
-    setlocal shiftwidth=2
-endfunction
-
-function! s:define_xslate_settings()
-    if !&modifiable
-        return
-    endif
-    inoremap <buffer><expr> - smartchr#one_of(' -> ')
-    set tabstop=2
-    set shiftwidth=2
-endfunction
-
-function! s:define_javascript_settings()
-    if !&modifiable
-        return
-    endif
-"    inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ')
-    set tabstop=2
-    set shiftwidth=2
-endfunction
-
-function! s:define_ruby_settings()
-    if !&modifiable
-        return
-    endif
-"    inoremap <expr> = smartchr#one_of(' = ', ' == ', ': ')
-    set tabstop=2
-    set shiftwidth=2
-    set tags+=tags;
-endfunction
-
-function! s:define_c_settings()
-    if !&modifiable
-        return
-    endif
-    inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ')
-    set tabstop=4
-    set shiftwidth=4
-endfunction
-
-function! s:define_perl_settings()
-    if !&modifiable
-        return
-    endif
-    inoremap <buffer><expr> - smartchr#one_of('->')
-    inoremap <buffer><expr> = smartchr#one_of(' = ', ' => ', ' == ')
-    set tabstop=4
-    set shiftwidth=4
-endfunction
-
 nmap gcc <Plug>(caw:i:toggle)
 xmap gcc <Plug>(caw:i:toggle)
 
 " snippets expand key
-
-let g:neocomplcache_enable_at_startup = 1
 
 "noremap es :<C-u>NeoComplCacheEditSnippets<CR>
 
@@ -230,6 +156,67 @@ let g:neocomplcache_enable_at_startup = 1
 " let g:neocomplcache_enable_camel_case_completion = 1
 " let g:neocomplcache_enable_underbar_completion = 1
 " let g:neocomplcache_min_syntax_length = 5
+
+"let g:clang_periodic_quickfix = 1
+"let g:clang_complete_copen = 1
+"let g:clang_use_library = 1
+
+" this need to be updated on llvm update
+"let g:clang_library_path = '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib'
+" specify compiler options
+"let g:clang_user_options = '-std=c++11 -stdlib=libc++'
+"let g:clang_auto_user_options = '.clang_complete'
+"let g:clang_auto_user_options = 'path'
+
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_force_overwrite_completefunc=1
+
+" if !exists('g:neocomplcache_force_omni_patterns')
+"     let g:neocomplcache_force_omni_patterns = {}
+" endif
+" let g:neocomplcache_force_overwrite_completefunc = 1
+" let g:neocomplcache_force_omni_patterns.c =
+"             \ '[^.[:digit:] *\t]\%(\.\|->\)'
+" let g:neocomplcache_force_omni_patterns.cpp =
+"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+" let g:neocomplcache_force_omni_patterns.objc =
+"             \ '[^.[:digit:] *\t]\%(\.\|->\)'
+" let g:neocomplcache_force_omni_patterns.objcpp =
+"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+" let g:neocomplcache_force_omni_patterns.rb =
+"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+"let g:clang_complete_auto = 0
+" let g:clang_auto_select = 0
+"
+
+let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.3'
+let g:rsenseHome = "/usr/local/Cellar/rsense/0.3"
+"let g:rsenseUseOmniFunc = 1
+
+"Enable heavy omni completion.
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+  " For perlomni.vim setting.
+  " https://github.com/c9s/perlomni.vim
+let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+let g:neocomplcache_auto_completion_start_length = 1
+
+
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
 
 "let g:vimshell_user_prompt = 'getcwd()'
 let g:vimshell_disable_escape_highlight = 1
@@ -253,17 +240,24 @@ nnoremap <silent> <Space>r :<C-u>UniteResume search-buffer<CR>
 
 "nnoremap <silent> <Space>p :<C-u>CtrlPYankRound<CR>
 
+let g:wildfire_water_map = '<S-Enter>'
+let g:wildfire_water_map = "<BS>"
+let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it', 'i>']
+
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! g:my_vimfiler_settings()
   let g:vimfiler_as_default_explorer = 1
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
   nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 endfunction
+
+augroup VimFiler
+  autocmd!
+  autocmd! FileType vimfiler call g:my_vimfiler_settings()
+augroup END
 
 let my_action = { 'is_selectable' : 1 }
 function! my_action.func(candidates)
@@ -282,6 +276,18 @@ endfunction
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
 
+augroup Omni
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup END
+
 filetype plugin indent on
 syntax on 
-colorscheme wombat256mod
+set background=dark
+colorscheme molokai
+
