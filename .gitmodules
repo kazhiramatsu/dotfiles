@@ -58,3 +58,9 @@
 [submodule ".vim/bundle/neocomplcache-rsense.vim"]
 	path = .vim/bundle/neocomplcache-rsense.vim
 	url = https://github.com/Shougo/neocomplcache-rsense.vim.git
+[submodule ".vim/bundle/vim-perl"]
+	path = .vim/bundle/vim-perl
+	url = https://github.com/vim-perl/vim-perl.git
+[submodule ".vim/bundle/vim-autoclose"]
+	path = .vim/bundle/vim-autoclose
+	url = https://github.com/Townk/vim-autoclose.git
