@@ -28,7 +28,16 @@ set ambw=double
 set t_Co=256
 set visualbell t_vb=
 
-
+inoremap { {}<LEFT>
+inoremap [ []<LEFT>
+inoremap ( ()<LEFT>
+inoremap " ""<LEFT>
+inoremap ' ''<LEFT>
+vnoremap { "zdi^V{<C-R>z}<ESC>
+vnoremap [ "zdi^V[<C-R>z]<ESC>
+vnoremap ( "zdi^V(<C-R>z)<ESC>
+vnoremap " "zdi^V"<C-R>z^V"<ESC>
+vnoremap ' "zdi'<C-R>z'<ESC>
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
@@ -95,6 +104,13 @@ endif
 " nmap <C-p> <Plug>(yankround-prev)
 " nmap <C-n> <Plug>(yankround-next)
 
+function! s:define_perl_settings()
+  inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', '=')
+endfunction
+
+nmap <Leader>r <plug>(quickrun)
+inoremap <C-d> $
+inoremap <C-a> @
 
 let g:unite_enable_start_insert = 0
 "nnoremap <silent> <Space>f :UniteWithCurrentDir buffer file_mru file<CR>
@@ -226,6 +242,7 @@ let g:vimfiler_time_format = ''
 
 "nnoremap <silent> <Space>g :Unite grep<CR>
 
+
 nnoremap <silent> <Space>h :VimShellPop .<CR>
 nnoremap <silent> <Space>v :VimFilerCurrentDir -buffer-name=explorer -split -winwidth=40 -toggle -no-quit<Cr>
 
@@ -271,10 +288,18 @@ function! my_action.func(candidates)
   exec 'vsplit '. a:candidates[0].action__path
 endfunction
 
+
 "let g:unite_source_grep_default_opts = '-iRHn'
 
 call unite#custom_action('file', 'my_split', my_action)
 call unite#custom_action('file', 'my_vsplit', my_action)
+
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 augroup Omni
   autocmd!
@@ -284,6 +309,11 @@ augroup Omni
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup END
+
+augroup SmarChar
+  autocmd!
+  autocmd FileType perl,ruby,javascript call s:define_perl_settings() 
 augroup END
 
 filetype plugin indent on

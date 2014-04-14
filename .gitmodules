@@ -61,6 +61,6 @@
 [submodule ".vim/bundle/vim-perl"]
 	path = .vim/bundle/vim-perl
 	url = https://github.com/vim-perl/vim-perl.git
-[submodule ".vim/bundle/vim-autoclose"]
-	path = .vim/bundle/vim-autoclose
-	url = https://github.com/Townk/vim-autoclose.git
+[submodule ".vim/bundle/yankround.vim"]
+	path = .vim/bundle/yankround.vim
+	url = https://github.com/LeafCage/yankround.vim.git
