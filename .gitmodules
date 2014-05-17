@@ -64,3 +64,15 @@
 [submodule ".vim/bundle/yankround.vim"]
 	path = .vim/bundle/yankround.vim
 	url = https://github.com/LeafCage/yankround.vim.git
+[submodule ".vim/bundle/clang_complete"]
+	path = .vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule ".vim/bundle/clang_complete-getopts-ios"]
+	path = .vim/bundle/clang_complete-getopts-ios
+	url = https://github.com/tokorom/clang_complete-getopts-ios.git
+[submodule ".vim/bundle/neosnippet-snippets"]
+	path = .vim/bundle/neosnippet-snippets
+	url = https://github.com/Shougo/neosnippet-snippets.git
+[submodule ".vim/bundle/jump2pm.vim"]
+	path = .vim/bundle/jump2pm.vim
+	url = https://github.com/nakatakeshi/jump2pm.vim.git
