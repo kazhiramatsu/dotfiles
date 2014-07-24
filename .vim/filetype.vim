@@ -10,5 +10,7 @@ augroup filetypedetect
   autocmd BufRead,BufNewFile *.pl setlocal ft=perl tabstop=4 shiftwidth=4
   autocmd BufRead,BufNewFile *.pm setlocal ft=perl tabstop=4 shiftwidth=4
   autocmd BufRead,BufNewFile *.c,*.h setlocal ft=c tabstop=2 shiftwidth=2
+  autocmd BufWritePre *.go Fmt
+  autocmd BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
 augroup END
 

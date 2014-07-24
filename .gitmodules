@@ -73,6 +73,3 @@
 [submodule ".vim/bundle/neosnippet-snippets"]
 	path = .vim/bundle/neosnippet-snippets
 	url = https://github.com/Shougo/neosnippet-snippets.git
-[submodule ".vim/bundle/jump2pm.vim"]
-	path = .vim/bundle/jump2pm.vim
-	url = https://github.com/nakatakeshi/jump2pm.vim.git

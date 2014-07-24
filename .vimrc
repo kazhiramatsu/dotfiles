@@ -27,6 +27,11 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
+if $GOROOT != ''
+  set rtp+=$GOROOT/misc/vim
+endif
+set completeopt=menu,preview
+set rtp+=${GOPATH}/src/github.com/nsf/gocode/vim
 
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -96,7 +101,6 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-
 "inoremap <C-o> <Esc>
 
 " nmap p <Plug>(yankround-p)
@@ -105,7 +109,7 @@ endif
 " nmap <C-n> <Plug>(yankround-next)
 
 function! s:define_perl_settings()
-  inoremap <buffer><expr> = smartchr#one_of(' = ', ' == ', '=')
+  inoremap <buffer><expr> = smartchr#one_of(' = ', ' => ', ' == ', '=')
 endfunction
 
 nmap <Leader>r <plug>(quickrun)
@@ -187,23 +191,8 @@ xmap gcc <Plug>(caw:i:toggle)
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_force_overwrite_completefunc=1
 
-" if !exists('g:neocomplcache_force_omni_patterns')
-"     let g:neocomplcache_force_omni_patterns = {}
-" endif
-" let g:neocomplcache_force_overwrite_completefunc = 1
-" let g:neocomplcache_force_omni_patterns.c =
-"             \ '[^.[:digit:] *\t]\%(\.\|->\)'
-" let g:neocomplcache_force_omni_patterns.cpp =
-"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-" let g:neocomplcache_force_omni_patterns.objc =
-"             \ '[^.[:digit:] *\t]\%(\.\|->\)'
-" let g:neocomplcache_force_omni_patterns.objcpp =
-"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-" let g:neocomplcache_force_omni_patterns.rb =
-"             \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"let g:clang_complete_auto = 0
-" let g:clang_auto_select = 0
-"
+let g:clang_complete_auto = 0
+let g:clang_auto_select = 0
 
 let g:neocomplcache#sources#rsense#home_directory = '/usr/local/Cellar/rsense/0.3'
 let g:rsenseHome = "/usr/local/Cellar/rsense/0.3"
@@ -218,12 +207,18 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+let g:neocomplcache_omni_patterns.objc = '[^.[:digit:] *\t]\%(\.\|->\)' 
+let g:neocomplcache_omni_patterns.go = '[^.[:digit:] *\t]\%(\.\|->\)'
+
+if !exists('g:neocomplcache#sources#omni#input_patterns')
+  let g:neocomplecache#sources#omni#input_patterns = {}
+endif
+let g:neocomplecache#sources#omni#input_patterns.go = '[^.[:digit:] *\t]\.\w*'
 
   " For perlomni.vim setting.
   " https://github.com/c9s/perlomni.vim
 let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-let g:neocomplcache_auto_completion_start_length = 1
-
+let g:neocomplcache_auto_completion_start_length = 3
 
 let g:neocomplcache_enable_smart_case = 1
 " Use camel case completion.
@@ -288,7 +283,6 @@ function! my_action.func(candidates)
   exec 'vsplit '. a:candidates[0].action__path
 endfunction
 
-
 "let g:unite_source_grep_default_opts = '-iRHn'
 
 call unite#custom_action('file', 'my_split', my_action)
@@ -311,6 +305,17 @@ augroup Omni
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END
 
+augroup MyVimshell
+  autocmd!
+  autocmd FileType vimshell
+        \       imap <expr> <buffer> <C-n> pumvisible() ? "\<C-n>" : "\<Plug>(vimshell_history_neocomplete)"
+augroup END
+
+augroup Go
+  autocmd!
+  autocmd FileType go compiler go
+augroup END
+
 augroup SmarChar
   autocmd!
   autocmd FileType perl,ruby,javascript call s:define_perl_settings() 
@@ -321,3 +326,7 @@ syntax on
 set background=dark
 colorscheme molokai
 
+let g:clang_complete_getopts_ios_sdk_directory = '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.1.sdk'
+let g:clang_auto_user_options = 'path, .clang_complete, ios'
+let g:clang_complete_getopts_ios_default_options = '-w -fblocks -fobjc-arc -D __IPHONE_OS_VERSION_MIN_REQUIRED=40300'
+let g:clang_complete_getopts_ios_ignore_directories = ["^\.git", "\.xcodeproj"]
