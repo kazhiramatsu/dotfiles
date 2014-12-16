@@ -40,3 +40,6 @@
 [submodule ".vim/bundle/yankround.vim"]
 	path = .vim/bundle/yankround.vim
 	url = https://github.com/LeafCage/yankround.vim.git
+[submodule ".vim/bundle/neomru.vim"]
+	path = .vim/bundle/neomru.vim
+	url = https://github.com/Shougo/neomru.vim.git
