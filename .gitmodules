@@ -1,15 +1,9 @@
 [submodule ".vim/bundle/unite.vim"]
 	path = .vim/bundle/unite.vim
 	url = git://github.com/Shougo/unite.vim.git
-[submodule ".vim/bundle/neocomplcache"]
-	path = .vim/bundle/neocomplcache
-	url = git://github.com/Shougo/neocomplcache.git
 [submodule ".vim/bundle/vimproc"]
 	path = .vim/bundle/vimproc
 	url = git://github.com/Shougo/vimproc.git
-[submodule ".vim/bundle/vimshell"]
-	path = .vim/bundle/vimshell
-	url = git://github.com/Shougo/vimshell.git
 [submodule ".vim/bundle/vim-smartchr"]
 	path = .vim/bundle/vim-smartchr
 	url = git://github.com/kana/vim-smartchr.git
@@ -25,18 +19,9 @@
 [submodule ".vim/bundle/unite-tag"]
 	path = .vim/bundle/unite-tag
 	url = https://github.com/tsukkee/unite-tag.git
-[submodule ".vim/bundle/neosnippet"]
-	path = .vim/bundle/neosnippet
-	url = https://github.com/Shougo/neosnippet.git
-[submodule ".vim/bundle/vim-quickrun"]
-	path = .vim/bundle/vim-quickrun
-	url = https://github.com/thinca/vim-quickrun.git
 [submodule ".vim/bundle/ack.vim"]
 	path = .vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
-[submodule ".vim/bundle/vim-javascript"]
-	path = .vim/bundle/vim-javascript
-	url = https://github.com/pangloss/vim-javascript.git
 [submodule ".vim/bundle/neomru.vim"]
 	path = .vim/bundle/neomru.vim
 	url = https://github.com/Shougo/neomru.vim
@@ -52,21 +37,9 @@
 [submodule ".vim/bundle/molokai"]
 	path = .vim/bundle/molokai
 	url = https://github.com/tomasr/molokai.git
-[submodule ".vim/bundle/neocomplcache-rsense.vim"]
-	path = .vim/bundle/neocomplcache-rsense.vim
-	url = https://github.com/Shougo/neocomplcache-rsense.vim.git
 [submodule ".vim/bundle/vim-perl"]
 	path = .vim/bundle/vim-perl
 	url = https://github.com/vim-perl/vim-perl.git
 [submodule ".vim/bundle/yankround.vim"]
 	path = .vim/bundle/yankround.vim
 	url = https://github.com/LeafCage/yankround.vim.git
-[submodule ".vim/bundle/clang_complete"]
-	path = .vim/bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-[submodule ".vim/bundle/clang_complete-getopts-ios"]
-	path = .vim/bundle/clang_complete-getopts-ios
-	url = https://github.com/tokorom/clang_complete-getopts-ios.git
-[submodule ".vim/bundle/neosnippet-snippets"]
-	path = .vim/bundle/neosnippet-snippets
-	url = https://github.com/Shougo/neosnippet-snippets.git
