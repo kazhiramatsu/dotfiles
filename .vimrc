@@ -27,7 +27,7 @@ set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
-
+set clipboard+=unnamed
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
@@ -87,6 +87,8 @@ if exists('&ambiwidth')
 endif
 
 let g:unite_enable_start_insert = 0
+let g:unite_source_grep_max_candidates = 100000 
+
 nnoremap <silent> <Space>f :Unite file_mru<CR>
 nnoremap <silent> <Space>b :Unite buffer<CR>
 nnoremap <silent> <Space>d :UniteWithInputDirectory file<CR>
@@ -121,6 +123,20 @@ endfunction
 augroup VimFiler
   autocmd!
   autocmd! FileType vimfiler call g:my_vimfiler_settings()
+augroup END
+
+function! g:my_perl_settings()
+  inoremap <buffer> <expr> = smartchr#loop(' = ', ' => ', '=', '==')
+endfunction
+
+function! g:my_c_settings()
+  inoremap <buffer> <expr> = smartchr#loop(' = ', ' == ', '=')
+endfunction
+
+augroup SmartChr
+  autocmd!
+  autocmd! FileType perl call g:my_perl_settings()
+  autocmd! FileType c call g:my_c_settings()
 augroup END
 
 let my_action = { 'is_selectable' : 1 }
