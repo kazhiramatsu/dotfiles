@@ -28,6 +28,9 @@
 [submodule ".vim/bundle/vim-colors-solarized"]
 	path = .vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
+[submodule ".vim/bundle/vim-javascript"]
+	path = .vim/bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript.git
 [submodule ".vim/bundle/vim-lucius"]
 	path = .vim/bundle/vim-lucius
 	url = https://github.com/jonathanfilip/vim-lucius.git
@@ -37,6 +40,9 @@
 [submodule ".vim/bundle/vim-perl"]
 	path = .vim/bundle/vim-perl
 	url = https://github.com/vim-perl/vim-perl.git
+[submodule ".vim/bundle/vim-quickrun"]
+	path = .vim/bundle/vim-quickrun
+	url = https://github.com/thinca/vim-quickrun.git
 [submodule ".vim/bundle/yankround.vim"]
 	path = .vim/bundle/yankround.vim
 	url = https://github.com/LeafCage/yankround.vim.git
