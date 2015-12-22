@@ -114,7 +114,7 @@ let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it', 'i>']
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-function! g:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
   let g:vimfiler_as_default_explorer = 1
   nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
   nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
@@ -123,28 +123,28 @@ endfunction
 
 augroup VimFiler
   autocmd!
-  autocmd! FileType vimfiler call g:my_vimfiler_settings()
+  autocmd! FileType vimfiler call s:my_vimfiler_settings()
 augroup END
 
-function! g:my_perl_settings()
+function! s:my_perl_settings()
   inoremap <buffer> <expr> = smartchr#loop(' = ', ' => ', '=', '==')
   inoremap { {}<Left>
 endfunction
 
-function! g:my_c_settings()
+function! s:my_c_settings()
   inoremap <buffer> <expr> = smartchr#loop(' = ', ' == ', '=')
 endfunction
 
-function! g:my_go_settings()
+function! s:my_go_settings()
   inoremap <buffer> <expr> = smartchr#loop(' := ', ' == ', '=')
 "  inoremap { {}<Left>
 endfunction
 
 augroup SmartChr
   autocmd!
-  autocmd! FileType perl call g:my_perl_settings()
-  autocmd! FileType c call g:my_c_settings()
-  autocmd! FileType go call g:my_go_settings()
+  autocmd! FileType perl call s:my_perl_settings()
+  autocmd! FileType c call s:my_c_settings()
+  autocmd! FileType go call s:my_go_settings()
 augroup END
 
 let my_action = { 'is_selectable' : 1 }
