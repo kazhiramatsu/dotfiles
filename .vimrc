@@ -171,6 +171,7 @@ nmap <C-n> <Plug>(yankround-next)
 
 call lexima#add_rule({'at': '\%#)', 'char': '"', 'input_after': '"', 'filetype': 'perl'})
 call lexima#add_rule({'char': '"', 'input_after': '";', 'filetype': 'perl'})
+call lexima#add_rule({'char': '(', 'input_after': ');', 'filetype': 'perl'})
 
 filetype plugin indent on
 syntax on 
