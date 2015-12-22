@@ -43,3 +43,9 @@
 [submodule ".vim/bundle/neomru.vim"]
 	path = .vim/bundle/neomru.vim
 	url = https://github.com/Shougo/neomru.vim.git
+[submodule ".vim/bundle/lexima.vim"]
+	path = .vim/bundle/lexima.vim
+	url = https://github.com/cohama/lexima.vim.git
+[submodule ".vim/bundle/vim-go"]
+	path = .vim/bundle/vim-go
+	url = https://github.com/fatih/vim-go.git

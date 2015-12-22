@@ -28,6 +28,7 @@ set ambw=double
 set t_Co=256
 set visualbell t_vb=
 set clipboard+=unnamed
+set completeopt=menuone
 
 " 文字コードの自動認識
 if &encoding !=# 'utf-8'
@@ -127,16 +128,23 @@ augroup END
 
 function! g:my_perl_settings()
   inoremap <buffer> <expr> = smartchr#loop(' = ', ' => ', '=', '==')
+  inoremap { {}<Left>
 endfunction
 
 function! g:my_c_settings()
   inoremap <buffer> <expr> = smartchr#loop(' = ', ' == ', '=')
 endfunction
 
+function! g:my_go_settings()
+  inoremap <buffer> <expr> = smartchr#loop(' := ', ' == ', '=')
+"  inoremap { {}<Left>
+endfunction
+
 augroup SmartChr
   autocmd!
   autocmd! FileType perl call g:my_perl_settings()
   autocmd! FileType c call g:my_c_settings()
+  autocmd! FileType go call g:my_go_settings()
 augroup END
 
 let my_action = { 'is_selectable' : 1 }
@@ -160,6 +168,8 @@ nmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
+
+call lexima#add_rule({'char': '"', 'input_after': '";', 'filetype': 'perl'})
 
 filetype plugin indent on
 syntax on 
