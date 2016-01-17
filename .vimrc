@@ -22,70 +22,11 @@ set tabstop=2
 set wrapscan
 filetype off 
 set updatetime=500
-set encoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
 set ambw=double
 set t_Co=256
 set visualbell t_vb=
 set clipboard+=unnamed
 set completeopt=menuone
-
-" 文字コードの自動認識
-if &encoding !=# 'utf-8'
-  set encoding=japan
-  set fileencoding=japan
-endif
-if has('iconv')
-  let s:enc_euc = 'euc-jp'
-  let s:enc_jis = 'iso-2022-jp'
-  " iconvがeucJP-msに対応しているかをチェック
-  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'eucjp-ms'
-    let s:enc_jis = 'iso-2022-jp-3'
-  " iconvがJISX0213に対応しているかをチェック
-  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
-    let s:enc_euc = 'euc-jisx0213'
-    let s:enc_jis = 'iso-2022-jp-3'
-  endif
-  " fileencodingsを構築
-  if &encoding ==# 'utf-8'
-    let s:fileencodings_default = &fileencodings
-    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
-    let &fileencodings = &fileencodings .','. s:fileencodings_default
-    unlet s:fileencodings_default
-  else
-    let &fileencodings = &fileencodings .','. s:enc_jis
-    set fileencodings+=utf-8,ucs-2le,ucs-2
-    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
-      set fileencodings+=cp932
-      
-      set fileencodings-=euc-jisx0213
-      set fileencodings-=eucjp-ms
-      let &encoding = s:enc_euc
-      let &fileencoding = s:enc_euc
-    else
-      let &fileencodings = &fileencodings .','. s:enc_euc
-    endif
-  endif
-  " 定数を処分
-  unlet s:enc_euc
-  unlet s:enc_jis
-endif
-" 日本語を含まない場合は fileencoding に encoding を使うようにする
-if has('autocmd')
-  function! AU_ReCheck_FENC()
-    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
-      let &fileencoding=&encoding
-    endif
-  endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
-endif
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
-" □とか○の文字があってもカーソル位置がずれないようにする
-if exists('&ambiwidth')
-  set ambiwidth=double
-endif
 
 let g:unite_enable_start_insert = 0
 let g:unite_source_grep_max_candidates = 100000 
@@ -128,7 +69,8 @@ augroup END
 
 function! s:my_perl_settings()
   inoremap <buffer> <expr> = smartchr#loop(' = ', ' => ', '=', '==')
-  inoremap { {}<Left>
+  inoremap <buffer> <expr> - smartchr#loop('->', '-', '--')
+  inoremap <buffer> <expr> : smartchr#loop('::', ':')
 endfunction
 
 function! s:my_c_settings()
@@ -144,11 +86,11 @@ augroup SmartChr
   autocmd!
   autocmd! FileType perl call s:my_perl_settings()
   autocmd! FileType c call s:my_c_settings()
-  autocmd! FileType go call s:my_go_settings()
+  autocmd! FileType go call s:my_gmo_settings()
 augroup END
 
 let my_action = { 'is_selectable' : 1 }
-function! my_action.func(candidates)
+function! my_action.func(candidatems)
   wincmd p
   exec 'split '. a:candidates[0].action__path
 endfunction
@@ -167,11 +109,29 @@ nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
+
+let g:quickrun_config = {
+      \ 'runner'    : 'vimproc',
+      \ 'runner/vimproc/updatetime' : 60,
+      \ 'outputter' : 'error',
+      \ 'outputter/error/success' : 'buffer',
+      \ 'outputter/error/error'   : 'quickfix',
+      \ 'outputter/buffer/split'  : ':rightbelow 8sp',
+      \ 'outputter/buffer/close_on_empty' : 1,
+      \ 'hook/time/enable' : 1,
+      \ }
+
+let g:quickrun_no_default_key_mappings = 1
+nnoremap \r :write<CR>:QuickRun -mode n<CR>        
+xnoremap \r :<C-U>write<CR>gv:QuickRun -mode v<CR> 
+nnoremap \r :cclose<CR>:write<CR>:QuickRun -mode n<CR>
+xnoremap \r :<C-U>cclose<CR>:write<CR>gv:QuickRun -mode v<CR>
+
+au FileType qf nnoremap <silent><buffer>q :quit<CR>
 
 call lexima#add_rule({'at': '\%#)', 'char': '"', 'input_after': '"', 'filetype': 'perl'})
-call lexima#add_rule({'char': '"', 'input_after': '";', 'filetype': 'perl'})
-call lexima#add_rule({'char': '(', 'input_after': ');', 'filetype': 'perl'})
+"call lexima#add_rule({'char': '"', 'input_after': '";', 'filetype': 'perl'})
+"call lexima#add_rule({'char': '(', 'input_after': ');', 'filetype': 'perl'})
 
 filetype plugin indent on
 syntax on 
