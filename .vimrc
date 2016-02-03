@@ -86,7 +86,7 @@ augroup SmartChr
   autocmd!
   autocmd! FileType perl call s:my_perl_settings()
   autocmd! FileType c call s:my_c_settings()
-  autocmd! FileType go call s:my_gmo_settings()
+  autocmd! FileType go call s:my_go_settings()
 augroup END
 
 let my_action = { 'is_selectable' : 1 }
@@ -111,15 +111,11 @@ nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 
 let g:quickrun_config = {
-      \ 'runner'    : 'vimproc',
-      \ 'runner/vimproc/updatetime' : 60,
-      \ 'outputter' : 'error',
-      \ 'outputter/error/success' : 'buffer',
-      \ 'outputter/error/error'   : 'quickfix',
-      \ 'outputter/buffer/split'  : ':rightbelow 8sp',
-      \ 'outputter/buffer/close_on_empty' : 1,
-      \ 'hook/time/enable' : 1,
-      \ }
+      \   "_" : {
+      \       "outputter/buffer/split" : ":botright",
+      \       "outputter/buffer/close_on_empty" : 1,
+      \   },
+      \}
 
 let g:quickrun_no_default_key_mappings = 1
 nnoremap \r :write<CR>:QuickRun -mode n<CR>        
