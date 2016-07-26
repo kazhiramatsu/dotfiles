@@ -52,10 +52,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " You can specify revision/branch/tag.
 " NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-NeoBundle 'tpope/vim-dispatch'
 
-NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'racer-rust/vim-racer'
+NeoBundleLazy 'rust-lang/rust.vim'
+NeoBundleLazy 'racer-rust/vim-racer'
 
 NeoBundleLazy 'OmniSharp/omnisharp-vim', {
       \   'autoload': { 'filetypes': [ 'cs', 'csi', 'csx' ] },
@@ -65,6 +64,9 @@ NeoBundleLazy 'OmniSharp/omnisharp-vim', {
       \     'unix': 'xbuild server/OmniSharp.sln',
       \   },
       \ }
+
+NeoBundle 'tpope/vim-dispatch'
+NeoBundleLazy 'udalov/kotlin-vim'
 
 
 let g:unite_enable_start_insert = 0
@@ -291,15 +293,18 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_perl_checkers = ['perl', 'podchecker']
+let g:syntastic_go_checkers = ['go']
 " let g:syntastic_perl_lib_path = [ './lib', ]
 " let g:syntastic_c_include_dirs = [ './include', '../include', '../../include' ]
 
 let g:OmniSharp_start_server = 0
 let g:OmniSharp_selector_ui = 'unite'
+
+let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 
 autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
 
@@ -312,12 +317,11 @@ let g:neocomplete#sources#omni#input_patterns.cs = '.*[^=\);]'
 let g:rustfmt_autosave = 1
 "let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 
-set hidden
 "let g:racer_cmd = '/Users/hiramatsu/.vim/bundle/vim-racer/racer/target/release/racer'
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_functions = 1
-let g:go_highlight_build_constraints = 1
+" let g:go_highlight_build_constraints = 1
 
 call neobundle#end()
 
